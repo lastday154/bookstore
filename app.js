@@ -3,6 +3,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+app.use(bodyParser.json());
+
 app.use(express.static(__dirname+'/client'));
 
 Genre =require('./models/genre');
@@ -25,6 +27,39 @@ app.get('/api/genres', (req, res) => {
 	});
 });
 
+
+app.post('/api/genres', (req, res) => {
+	var genre = req.body;
+	Genre.addGenre(genre, (err, genre) => {
+		if(err){
+			throw err;
+		}
+		res.json(genre);
+	});
+});
+
+app.put('/api/genres/:id', (req, res) => {
+	var id = req.params.id;
+	var genre = req.body;
+	Genre.updateGenre(id, genre, {}, (err, genre) => {
+		if(err){
+			throw err;
+		}
+		res.json(genre);
+	});
+});
+
+app.delete('/api/genres/:id', (req, res) => {
+	var id = req.params.id;
+	var genre = req.body;
+	Genre.deleteGenre(id, (err, genre) => {
+		if(err){
+			throw err;
+		}
+		res.json(genre);
+	});
+});
+
 app.get('/api/books', (req, res) => {
 	Book.getBooks((err, books) => {
 		if(err){
@@ -36,6 +71,40 @@ app.get('/api/books', (req, res) => {
 
 app.get('/api/books/:id', (req, res) => {
 	Book.getBookById(req.params.id, (err, book) => {
+		if(err){
+			throw err;
+		}
+		res.json(book);
+	});
+});
+
+app.post('/api/books', (req, res) => {
+	var book = req.body;
+
+	Book.addBook(book, (err, book) => {
+		if(err){
+			throw err;
+		}
+		res.json(book);
+	});
+});
+
+
+app.put('/api/books/:id', (req, res) => {
+	var id = req.params.id;
+	var book = req.body;
+	Book.updateBook(id, book, {}, (err, book) => {
+		if(err){
+			throw err;
+		}
+		res.json(book);
+	});
+});
+
+app.delete('/api/books/:id', (req, res) => {
+	var id = req.params.id;
+	var book = req.body;
+	Book.deleteBook(id, (err, book) => {
 		if(err){
 			throw err;
 		}
