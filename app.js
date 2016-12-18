@@ -3,9 +3,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-app.use(bodyParser.json());
-
 app.use(express.static(__dirname+'/client'));
+app.use(bodyParser.json());
 
 Genre =require('./models/genre');
 Book =require('./models/book');
@@ -23,10 +22,10 @@ app.get('/api/genres', (req, res) => {
 		if(err){
 			throw err;
 		}
+		console.log(genres);
 		res.json(genres);
 	});
 });
-
 
 app.post('/api/genres', (req, res) => {
 	var genre = req.body;
@@ -38,8 +37,8 @@ app.post('/api/genres', (req, res) => {
 	});
 });
 
-app.put('/api/genres/:id', (req, res) => {
-	var id = req.params.id;
+app.put('/api/genres/:_id', (req, res) => {
+	var id = req.params._id;
 	var genre = req.body;
 	Genre.updateGenre(id, genre, {}, (err, genre) => {
 		if(err){
@@ -49,10 +48,9 @@ app.put('/api/genres/:id', (req, res) => {
 	});
 });
 
-app.delete('/api/genres/:id', (req, res) => {
-	var id = req.params.id;
-	var genre = req.body;
-	Genre.deleteGenre(id, (err, genre) => {
+app.delete('/api/genres/:_id', (req, res) => {
+	var id = req.params._id;
+	Genre.removeGenre(id, (err, genre) => {
 		if(err){
 			throw err;
 		}
@@ -69,8 +67,8 @@ app.get('/api/books', (req, res) => {
 	});
 });
 
-app.get('/api/books/:id', (req, res) => {
-	Book.getBookById(req.params.id, (err, book) => {
+app.get('/api/books/:_id', (req, res) => {
+	Book.getBookById(req.params._id, (err, book) => {
 		if(err){
 			throw err;
 		}
@@ -80,7 +78,6 @@ app.get('/api/books/:id', (req, res) => {
 
 app.post('/api/books', (req, res) => {
 	var book = req.body;
-
 	Book.addBook(book, (err, book) => {
 		if(err){
 			throw err;
@@ -89,9 +86,8 @@ app.post('/api/books', (req, res) => {
 	});
 });
 
-
-app.put('/api/books/:id', (req, res) => {
-	var id = req.params.id;
+app.put('/api/books/:_id', (req, res) => {
+	var id = req.params._id;
 	var book = req.body;
 	Book.updateBook(id, book, {}, (err, book) => {
 		if(err){
@@ -101,10 +97,9 @@ app.put('/api/books/:id', (req, res) => {
 	});
 });
 
-app.delete('/api/books/:id', (req, res) => {
-	var id = req.params.id;
-	var book = req.body;
-	Book.deleteBook(id, (err, book) => {
+app.delete('/api/books/:_id', (req, res) => {
+	var id = req.params._id;
+	Book.removeBook(id, (err, book) => {
 		if(err){
 			throw err;
 		}

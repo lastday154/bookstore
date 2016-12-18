@@ -11,6 +11,6 @@
   	"body-parser":"*",
   	"mongoose":"*"
   },
-  "author": "Steve Hoang",
+  "author": "Brad Traversy",
   "license": "ISC"
 }
